@@ -8,8 +8,6 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 function downloadCallback(infoArray) {
 	var url = infoArray[0]
 	var name = infoArray[1]
-	alert(url);
-	alert(name);
 
 	chrome.downloads.download({
 	  			url: url,
