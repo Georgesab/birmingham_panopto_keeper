@@ -1,15 +1,16 @@
+// Message listener
 chrome.browserAction.onClicked.addListener(function (tab) {
-	//alert("hello world");
 	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    	chrome.tabs.sendMessage(tabs[0].id, {action: "open_dialog_box"}, downloadCallback);  
+    	chrome.tabs.sendMessage(tabs[0].id, {action: "download_video"}, downloadCallback);  
 	})
 });
 
+// Callback to download video
 function downloadCallback(infoArray) {
 	var url = infoArray[0]
 	var name = infoArray[1]
 
-	chrome.downloads.download({
+	chrome.downloads.download( {
 	  			url: url,
 	  			filename: name,
 	  			saveAs: true
