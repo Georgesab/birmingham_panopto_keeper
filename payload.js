@@ -24,11 +24,12 @@ chrome.extension.onMessage.addListener(function(msg, _sender, sendResponse) {
 					name = metas[i].getAttribute("content").split('?')[0];
 				}
 			
-			// Split the name up, and add file format
-			name = name.split(' ').join('_');
-			name = name.split(':').join('-');
+			// Split the name up (remove invalid characters in file names) && add file format
+			name = name.split(' ').join('_'); // Remove spaces
+			name = name.split(':').join('-'); // Remove colons
 			name = name + ".mp4";
 
+			// Pack into array to send through callback function
 			var infoArray = [url, name]
 
 			// Callback function
