@@ -1,7 +1,7 @@
 chrome.extension.onMessage.addListener(function(msg, _sender, sendResponse) {
 
  	if (msg.action == 'download_video') {
-    	
+		
 		if(window.location.href.indexOf("panopto.eu") < 1) { 
 				alert("Sorry: No Panopto video detected!"); 
 				exit(); 
@@ -9,8 +9,8 @@ chrome.extension.onMessage.addListener(function(msg, _sender, sendResponse) {
 			var metas = document.getElementsByTagName('meta'); 
 			
 			// Default parameters to grab video info
-			var name = ""
-			var url = ""
+			var name = "";
+			var url = "";
 
 			for (var i=0; i<metas.length; i++) 
 				if (metas[i].getAttribute("name") == "twitter:player:stream") { 
@@ -25,12 +25,13 @@ chrome.extension.onMessage.addListener(function(msg, _sender, sendResponse) {
 				}
 			
 			// Split the name up (remove invalid characters in file names) && add file format
+			name = name.split('/').join('_'); // Remove slashes
 			name = name.split(' ').join('_'); // Remove spaces
 			name = name.split(':').join('-'); // Remove colons
 			name = name + ".mp4";
 
 			// Pack into array to send through callback function
-			var infoArray = [url, name]
+			var infoArray = [url, name];
 
 			// Callback function
 			sendResponse(infoArray);
@@ -38,3 +39,13 @@ chrome.extension.onMessage.addListener(function(msg, _sender, sendResponse) {
   	}
 
 });
+
+/*
+// When loaded, send a message to the extension to wake it up
+chrome.runtime.sendMessage(
+    "hello",
+    function (response) {
+        console.log(response);
+    }
+);
+*/
